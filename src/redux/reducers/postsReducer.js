@@ -1,4 +1,4 @@
-import { SET_COMMENTS, SET_POSTS } from "../actions";
+import { SET_COMMENTS, SET_POSTS, SET_COMMENTS_IS_LOADING } from "../actions";
 
 const initialState = {
   posts: [],
@@ -30,6 +30,20 @@ const postsReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         posts: updatedPosts,
+      };
+    case SET_COMMENTS_IS_LOADING:
+      let updatedPostsComm = [...state.posts];
+      let postComm = updatedPostsComm[payload - 1];
+      updatedPostsComm[payload - 1] = {
+        ...postComm,
+        commentsIsLoading: updatedPostsComm[payload - 1]?.commentsIsLoading
+          ? false
+          : true,
+      };
+
+      return {
+        ...state,
+        posts: updatedPostsComm,
       };
     default:
       return state;

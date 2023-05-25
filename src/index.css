@@ -12,11 +12,9 @@ body {
 
 body {
   font-family: "Montserrat", sans-serif;
-  /* background: linear-gradient(to bottom, #ffffff, #ecebe7, #f7f5f3) !important; */
   background-color: #f7f5f3;
   min-height: 100vh;
   color: #fff;
-  text-transform: capitalize;
 }
 
 #root {
@@ -34,7 +32,11 @@ header {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
   position: fixed;
   width: 100vw;
-  /* padding-inline: clamp(2rem, 7vw, 15rem); */
+
   background-color: #ffffff;
   z-index: 10;
+}
+
+*::first-letter {
+  text-transform: uppercase;
 }

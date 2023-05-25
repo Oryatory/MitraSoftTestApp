@@ -32,11 +32,11 @@ export function* handlePosts() {
 
 export function* handleComments(action) {
   try {
-    yield put(setCommentsIsLoading(true));
+    yield put(setCommentsIsLoading(action.payload));
     const data = yield call(getComments, action.payload);
     yield put(setComments(data));
     yield delay(500);
-    yield put(setCommentsIsLoading(false));
+    yield put(setCommentsIsLoading(action.payload));
   } catch (error) {
     console.log(error);
     // yield put({

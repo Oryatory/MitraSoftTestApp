@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const navigation = [
   { id: 1, title: "Posts", path: "/" },
-  { id: 2, title: "About Me", path: "/" },
+  { id: 2, title: "About Me", path: "/about" },
 ];
 
 const Header = () => {
@@ -41,9 +41,8 @@ const Header = () => {
                       to={path}
                       style={{
                         textDecoration: "none",
-                        fontWeight: "700",
                         color: "#000",
-                        fontSize: "1.5rem",
+                        fontSize: "2rem",
                       }}
                     >
                       {title}

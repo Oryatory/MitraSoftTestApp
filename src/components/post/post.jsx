@@ -1,21 +1,28 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button, Card } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Row,
+  Col,
+  Placeholder,
+  ListGroup,
+} from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { GET_COMMENTS, SET_COMMENTS } from "../../redux/actions";
 import Comments from "../comments/comments";
 import { memo } from "react";
 
-const Post = memo(({ id, body, title, comments }) => {
+const Post = memo(({ id, body, title, comments, commentsIsLoading }) => {
   const dispatch = useDispatch();
 
   const handleComments = (id) => {
-    !comments
-      ? dispatch({ type: GET_COMMENTS, payload: id })
-      : dispatch({ type: SET_COMMENTS, payload: id });
+    if (!comments) {
+      dispatch({ type: GET_COMMENTS, payload: id });
+    } else dispatch({ type: SET_COMMENTS, payload: id });
   };
 
   return (
-    <Card key={id} style={{ marginBottom: "1rem", color: "#000" }}>
+    <Card style={{ marginBottom: "1rem", color: "#000" }}>
       <div
         className="rounded-circle overflow-hidden  m-3 mb-0"
         style={{ width: "50px", height: "50px" }}
@@ -30,10 +37,37 @@ const Post = memo(({ id, body, title, comments }) => {
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Text>{body}</Card.Text>
-        <Button variant="primary" onClick={() => handleComments(id)}>
-          {comments ? "Hide Comments" : "Show Comments"}
-        </Button>
-        {comments ? <Comments comments={comments} /> : null}
+        <Row>
+          <Col>
+            <Button
+              variant="primary"
+              className="float-end"
+              onClick={() => handleComments(id)}
+            >
+              {comments ? "Hide Comments" : "Show Comments"}
+            </Button>
+          </Col>
+        </Row>
+
+        {comments && !commentsIsLoading ? (
+          <Comments comments={comments} />
+        ) : commentsIsLoading ? (
+          <Placeholder as={ListGroup} className="mt-3" animation="glow">
+            <div className="row">
+              {Array(7)
+                .fill()
+                .map((_, index) => (
+                  <div className={`col-${index + 3}`} key={index}>
+                    <Placeholder
+                      className="mb-3 col-2"
+                      style={{ height: "20px", width: "100%" }}
+                      as={ListGroup.Item}
+                    />
+                  </div>
+                ))}
+            </div>
+          </Placeholder>
+        ) : null}
       </Card.Body>
     </Card>
   );

@@ -1,12 +1,10 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GET_POSTS } from "../../redux/actions";
 import PostsList from "../../components/postsList/postsList";
 import { Container } from "react-bootstrap";
 
 const PostsPage = () => {
-  const { posts } = useSelector((store) => store?.postsReducer || {});
-  const { postsError } = useSelector((store) => store?.errorsReducer || {});
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,7 +13,7 @@ const PostsPage = () => {
 
   return (
     <Container>
-      <PostsList posts={posts} error={postsError} title="All Posts" />
+      <PostsList />
     </Container>
   );
 };

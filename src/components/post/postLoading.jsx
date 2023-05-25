@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, Placeholder } from "react-bootstrap";
 
 const PostLoading = () => {
@@ -19,7 +18,11 @@ const PostLoading = () => {
           <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{" "}
           <Placeholder xs={6} /> <Placeholder xs={8} />
         </Placeholder>
-        <Placeholder.Button variant="secondary" xs={2} />
+        <Placeholder.Button
+          variant="secondary"
+          className={"float-end"}
+          xs={3}
+        />
       </Card.Body>
     </Card>
   );

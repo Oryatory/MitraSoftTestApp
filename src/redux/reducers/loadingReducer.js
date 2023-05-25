@@ -12,11 +12,7 @@ const loadingReducer = (state = initialState, { type, payload }) => {
         ...state,
         postsIsLoading: payload,
       };
-    case SET_COMMENTS_IS_LOADING:
-      return {
-        ...state,
-        commentsIsLoading: payload,
-      };
+
     default:
       return state;
   }
