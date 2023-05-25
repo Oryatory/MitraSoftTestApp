@@ -1,0 +1,9 @@
+export const SET_POSTS_IS_LOADING = "SET_POSTS_IS_LOADING";
+export const SET_COMMENTS_IS_LOADING = "SET_COMMENTS_IS_LOADING";
+
+export const GET_POSTS = "GET_POSTS";
+export const SET_POSTS = "SET_POSTS";
+export const SET_POSTS_ERROR = "SET_POSTS_ERROR";
+
+export const GET_COMMENTS = "GET_COMMENTS";
+export const SET_COMMENTS = "SET_COMMENTS";
