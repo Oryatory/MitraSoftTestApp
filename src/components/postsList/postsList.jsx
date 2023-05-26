@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 import Post from "../post/post";
 import PostLoading from "../post/postLoading";
+import { memo } from "react";
 
-const PostsList = () => {
+const PostsList = memo(() => {
   const { postsIsLoading } = useSelector((store) => store?.loadingReducer);
   const { posts } = useSelector((store) => store?.postsReducer || {});
   const { postsError: error } = useSelector(
@@ -24,6 +25,6 @@ const PostsList = () => {
           })}
     </div>
   );
-};
+});
 
 export default PostsList;

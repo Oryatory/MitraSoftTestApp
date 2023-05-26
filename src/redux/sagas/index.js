@@ -13,6 +13,7 @@ import {
   setComments,
   setPostsIsLoading,
   setCommentsIsLoading,
+  setInitialComments,
 } from "../actions/actionCreater";
 
 export function* handlePosts() {
@@ -21,6 +22,7 @@ export function* handlePosts() {
     const data = yield call(getPosts);
     yield put(setPosts(data));
     yield delay(500);
+    yield put(setInitialComments(data.length));
     yield put(setPostsIsLoading(false));
   } catch {
     yield put({

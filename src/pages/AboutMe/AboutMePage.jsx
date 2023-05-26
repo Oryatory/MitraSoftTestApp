@@ -31,7 +31,7 @@ const AboutMePage = () => {
                 alt="Profile"
               />
             </div>
-            <Card.Title style={{ fontWeight: "700", fontSize: "2rem" }}>
+            <Card.Title style={{ fontWeight: "700", fontSize: "1.5rem" }}>
               Ilia Larin
             </Card.Title>
           </Col>
