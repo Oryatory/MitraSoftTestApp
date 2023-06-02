@@ -1,1 +1,0 @@
-# MitraSoft test project
