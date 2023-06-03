@@ -1,15 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export interface CommentData {
+  id: number;
+  email: string;
+  body: string;
+}
+
 interface Comment {
-  comments?: any[];
+  comments?: CommentData[];
   commentsIsLoading?: boolean;
 }
 
 interface CommentsState {
-  comments: Comment[];
+  allComments: Comment[];
 }
 
-const initialState: CommentsState = { comments: [] };
+const initialState: CommentsState = { allComments: [] };
 
 const commentsSlice = createSlice({
   name: "comments",
@@ -19,22 +25,22 @@ const commentsSlice = createSlice({
       state,
       action: PayloadAction<{ data: any[]; postId: number }>
     ) => {
-      state.comments[action.payload.postId - 1].comments = action.payload.data;
+      state.allComments[action.payload.postId].comments = action.payload.data;
     },
     deleteComments: (state, action: PayloadAction<number>) => {
-      state.comments[action.payload].comments = undefined;
+      state.allComments[action.payload].comments = undefined;
     },
-    setInitialComments: (state, action: PayloadAction<number>) => {
-      state.comments = Array.from({ length: action.payload }, (_) => {
+    setInitialComments: (state, action: PayloadAction<any[]>) => {
+      state.allComments = action.payload.reduce((acc, comment) => {
         return {
-          comments: undefined,
-          commentsIsLoading: false,
+          ...acc,
+          [comment]: { commentsIsLoading: false },
         };
-      });
+      }, {});
     },
     setCommentsIsLoading: (state, action: PayloadAction<number>) => {
-      const isLoading = state.comments[action.payload - 1].commentsIsLoading;
-      state.comments[action.payload - 1].commentsIsLoading = !isLoading;
+      const isLoading = state.allComments[action.payload].commentsIsLoading;
+      state.allComments[action.payload].commentsIsLoading = !isLoading;
     },
   },
 });

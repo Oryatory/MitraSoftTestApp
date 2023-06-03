@@ -1,6 +1,30 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { PostProps } from "../../components/post/Post";
 
-const initialState = {
+export interface userType {
+  name: string;
+  username: string;
+  email: string;
+  address: {
+    street: string;
+    suite: string;
+    city: string;
+  };
+  phone: string;
+  website: string;
+  company: {
+    name: string;
+  };
+}
+
+interface UserProps {
+  user: userType | null;
+  userPosts: PostProps[];
+  userPostsIsLoading: boolean;
+  userPostsError: string;
+}
+
+const initialState: UserProps = {
   user: null,
   userPosts: [],
   userPostsIsLoading: false,

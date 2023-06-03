@@ -1,11 +1,4 @@
-import {
-  Button,
-  Card,
-  Row,
-  Col,
-  Placeholder,
-  ListGroup,
-} from "react-bootstrap";
+import { Button, Card, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { deleteComments } from "../../redux/reducers/commentsSlice";
@@ -23,16 +16,20 @@ export type PostProps = {
 
 const Post = ({ id, body, title, userId }: PostProps) => {
   const dispatch = useDispatch();
-
   const { comments, commentsIsLoading } = useSelector(
-    (store: RootState) => store?.commentsSlice?.comments?.[id - 1] || {}
+    (store: RootState) => store?.commentsSlice?.allComments?.[id] || {}
   );
 
   const handleComments = useCallback(() => {
     if (!comments) {
       dispatch({ type: "comments/fetchComments", payload: id });
-    } else dispatch(deleteComments(id - 1));
+    } else dispatch(deleteComments(id));
   }, [comments, dispatch, id]);
+
+  const MemoizedCardText = memo(Card.Text);
+  const MemoizedCardImg = memo(Card.Img);
+  const MemoizedCardBody = memo(Card.Body);
+  const MemoizedCardTitle = memo(Card.Title);
 
   return (
     <Card style={{ marginBottom: "1rem", color: "#000" }}>
@@ -41,16 +38,16 @@ const Post = ({ id, body, title, userId }: PostProps) => {
           className="rounded-circle overflow-hidden  m-3 mb-0"
           style={{ width: "50px", height: "50px", cursor: "pointer" }}
         >
-          <Card.Img
+          <MemoizedCardImg
             src="https://via.placeholder.com/150/66b7d2"
             alt="Avatar"
             className="w-100 object-fit-cover "
           />
         </div>
       </Link>
-      <Card.Body>
-        <Card.Title>{title}</Card.Title>
-        <Card.Text>{body}</Card.Text>
+      <MemoizedCardBody>
+        <MemoizedCardTitle>{title}</MemoizedCardTitle>
+        <MemoizedCardText>{body}</MemoizedCardText>
         <Row>
           <Col>
             <Button
@@ -65,26 +62,8 @@ const Post = ({ id, body, title, userId }: PostProps) => {
           </Col>
         </Row>
 
-        {comments && !commentsIsLoading ? (
-          <Comments comments={comments} />
-        ) : commentsIsLoading ? (
-          <Placeholder as={ListGroup} className="mt-3" animation="glow">
-            <div className="row">
-              {Array(7)
-                .fill(7)
-                .map((_, index) => (
-                  <div className={`col-${index + 3}`} key={index}>
-                    <Placeholder
-                      className="mb-3 col-2"
-                      style={{ height: "20px", width: "100%" }}
-                      as={ListGroup.Item}
-                    />
-                  </div>
-                ))}
-            </div>
-          </Placeholder>
-        ) : null}
-      </Card.Body>
+        <Comments id={id} />
+      </MemoizedCardBody>
     </Card>
   );
 };

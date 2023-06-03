@@ -1,7 +1,13 @@
 import { Card, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { memo } from "react";
+import { userType } from "../../redux/reducers/userSlice";
 
-const UserInfo = ({ user }) => {
+interface UserInfoProps {
+  user: userType;
+}
+
+const UserInfo = memo(({ user }: UserInfoProps) => {
   const { name, username, email, address, phone, website, company } = user;
   const { street, suite, city } = address;
   const { name: companyName } = company;
@@ -45,5 +51,5 @@ const UserInfo = ({ user }) => {
       </Card.Body>
     </Card>
   );
-};
+});
 export default UserInfo;

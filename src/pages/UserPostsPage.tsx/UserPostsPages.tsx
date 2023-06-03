@@ -4,6 +4,7 @@ import UserInfo from "../../components/userInfo/UserInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useEffect } from "react";
+import SearchInput from "../../components/searchInput/SearchInput";
 import { Container } from "react-bootstrap";
 
 const UserPostsPages = () => {
@@ -19,15 +20,18 @@ const UserPostsPages = () => {
   );
 
   return (
-    <Container>
-      {user ? <UserInfo user={user} /> : null}
-      <PostsList
-        posts={userPosts}
-        postsError={userPostsError}
-        postsIsLoading={userPostsIsLoading}
-        title={"User Posts"}
-      />
-    </Container>
+    <>
+      <SearchInput />
+      <Container>
+        {user ? <UserInfo user={user} /> : null}
+        <PostsList
+          posts={userPosts}
+          postsError={userPostsError}
+          postsIsLoading={userPostsIsLoading}
+          title={"User Posts"}
+        />
+      </Container>
+    </>
   );
 };
 export default UserPostsPages;

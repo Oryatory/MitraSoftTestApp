@@ -33,7 +33,7 @@ const Header = () => {
                 <Offcanvas.Title>Menu</Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
-                <Nav fill className="flex-column" position="end">
+                <Nav fill className="flex-column">
                   {navigation.map(({ id, title, path }) => (
                     <NavLink
                       key={id}

@@ -3,7 +3,6 @@ import Header from "./components/header/Header";
 import PostsPage from "./pages/postsPage/postsPage";
 import AboutMePage from "./pages/AboutMePage/AboutMePage";
 import UserPostsPages from "./pages/UserPostsPage.tsx/UserPostsPages";
-import SearchInput from "./components/searchInput/SearchInput";
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
       <Router>
         <Header />
         <main>
-          <SearchInput />
           <Routes>
             <Route path="/" element={<PostsPage />} />
             <Route path="/about" element={<AboutMePage />} />

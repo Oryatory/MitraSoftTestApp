@@ -2,24 +2,34 @@ import { setSearchTerm } from "../../redux/reducers/searchSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Container } from "react-bootstrap";
 import { FaTimes } from "react-icons/fa";
-import { setPosts } from "../../redux/reducers/postsSlice";
 import { RootState } from "../../redux/store";
+import { useLocation } from "react-router-dom";
+import { setDisplayedPosts } from "../../redux/reducers/displayedPostsSlice";
 
 const SearchInput = () => {
   const dispatch = useDispatch();
   const { posts } = useSelector((store: RootState) => store?.postsSlice);
+  const { userPosts } = useSelector((store: RootState) => store?.userSlice);
+
   const { searchTerm } = useSelector((store: RootState) => store?.searchSlice);
-  const handleSearch = () => {
-    dispatch(
-      setPosts(
-        posts.filter((post) => post.title.includes(searchTerm.toLowerCase()))
-      )
-    );
-  };
+  const location = useLocation();
 
   const handleClearSearch = () => {
-    setSearchTerm("");
+    dispatch(setDisplayedPosts(location.pathname === "/" ? posts : userPosts));
     dispatch(setSearchTerm(""));
+  };
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPosts =
+      location.pathname === "/"
+        ? posts.filter((post) =>
+            post.title.includes(e.target.value.toLowerCase())
+          )
+        : userPosts.filter((post) =>
+            post.title.includes(e.target.value.toLowerCase())
+          );
+
+    dispatch(setDisplayedPosts(newPosts));
   };
 
   return (
@@ -33,7 +43,10 @@ const SearchInput = () => {
           className="form-control"
           placeholder="Search..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => {
+            dispatch(setSearchTerm(e.target.value));
+            handleSearch(e);
+          }}
         />
         {searchTerm && (
           <button
@@ -41,7 +54,7 @@ const SearchInput = () => {
               background: "transparent",
               border: "none",
               position: "absolute",
-              right: "4.5rem",
+              right: "0.5rem",
               zIndex: "10",
               color: "grey",
             }}
@@ -50,9 +63,6 @@ const SearchInput = () => {
             <FaTimes />
           </button>
         )}
-        <button className="btn btn-primary" onClick={handleSearch}>
-          Search
-        </button>
       </div>
     </Container>
   );

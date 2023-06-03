@@ -4,11 +4,13 @@ import { Container } from "react-bootstrap";
 import PostsList from "../../components/postsList/PostsList";
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
+import SearchInput from "../../components/searchInput/SearchInput";
 
 const PostsPage = () => {
   const { posts, postsError, postsIsLoading } = useSelector(
     (store: RootState) => store?.postsSlice || {}
   );
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,14 +18,17 @@ const PostsPage = () => {
   }, [dispatch]);
 
   return (
-    <Container>
-      <PostsList
-        posts={posts}
-        postsError={postsError}
-        postsIsLoading={postsIsLoading}
-        title={"All Posts"}
-      />
-    </Container>
+    <>
+      <SearchInput />
+      <Container>
+        <PostsList
+          posts={posts}
+          postsError={postsError}
+          postsIsLoading={postsIsLoading}
+          title={"All Posts"}
+        />
+      </Container>
+    </>
   );
 };
 
