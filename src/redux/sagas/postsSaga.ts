@@ -23,6 +23,8 @@ export function* handlePosts(): Generator<any, void, any> {
     yield put(setPostsIsLoading(false));
   } catch (error) {
     console.log(error);
+    yield put(setDisplayedPosts([]));
+    yield put(setPostsIsLoading(false));
     yield put(setPostsError("Something went wrong..."));
   }
 }

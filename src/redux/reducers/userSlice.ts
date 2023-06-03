@@ -20,6 +20,7 @@ export interface userType {
 interface UserProps {
   user: userType | null;
   userInfoIsLoading: boolean;
+  userInfoError: string;
   userPosts: PostProps[];
   userPostsIsLoading: boolean;
   userPostsError: string;
@@ -27,7 +28,8 @@ interface UserProps {
 
 const initialState: UserProps = {
   user: null,
-  userInfoIsLoading: false,
+  userInfoIsLoading: true,
+  userInfoError: "",
   userPosts: [],
   userPostsIsLoading: false,
   userPostsError: "",
@@ -42,6 +44,9 @@ const userSlice = createSlice({
     },
     setUserInfoIsLoading: (state, action) => {
       state.userInfoIsLoading = action.payload;
+    },
+    setUserInfoError: (state, action) => {
+      state.userInfoError = action.payload;
     },
     setUserPosts: (state, action) => {
       state.userPosts = action.payload;
@@ -58,6 +63,7 @@ const userSlice = createSlice({
 export const {
   setUser,
   setUserInfoIsLoading,
+  setUserInfoError,
   setUserPosts,
   setUserPostsIsLoading,
   setUserPostsError,

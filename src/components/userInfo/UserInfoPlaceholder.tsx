@@ -2,7 +2,13 @@ import { Card, Placeholder, Row, Col } from "react-bootstrap";
 
 const UserInfoPlaceholder = () => {
   return (
-    <Card style={{ marginBottom: "1rem", color: "#000" }}>
+    <Card
+      style={{
+        color: "#000",
+        maxWidth: "768px",
+      }}
+      className="m-auto mb-5"
+    >
       <Row>
         <Col>
           <Placeholder
@@ -31,6 +37,9 @@ const UserInfoPlaceholder = () => {
               <Placeholder xs={9} />
               <Placeholder xs={8} />
               <Placeholder xs={7} />
+              <Placeholder xs={6} />
+              <Placeholder xs={5} />
+              <Placeholder xs={4} />
             </Placeholder>
           </Col>
           <Col>
@@ -38,6 +47,9 @@ const UserInfoPlaceholder = () => {
               <Placeholder xs={9} />
               <Placeholder xs={8} />
               <Placeholder xs={7} />
+              <Placeholder xs={6} />
+              <Placeholder xs={5} />
+              <Placeholder xs={4} />
             </Placeholder>
           </Col>
         </Row>

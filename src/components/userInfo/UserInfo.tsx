@@ -35,7 +35,7 @@ const UserInfo = memo(({ user }: UserInfoProps) => {
           </Col>
         </Row>
 
-        <h2>{username} user-info:</h2>
+        <h2>{username}`s info:</h2>
         <Row>
           <Col>
             <Card.Text>Name: {name}</Card.Text>

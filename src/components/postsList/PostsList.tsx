@@ -21,16 +21,18 @@ const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
     (store: RootState) => store?.displayedPostsSlice || {}
   );
 
-  if (!displayedPosts && !postsIsLoading) {
-    return postsError ? <h2>{postsError}</h2> : null;
-  }
-
   const { currentPage, itemsPerPage } = useSelector(
     (store: RootState) => store?.paginationSlice || {}
   );
 
   const [isSortAscending, setIsSortAscending] = useState(false);
-
+  if (displayedPosts.length === 0 && !postsIsLoading) {
+    return postsError ? (
+      <p>{postsError}</p>
+    ) : (
+      <p>The search has not lead to any results...</p>
+    );
+  }
   const handleSort = () => {
     const sortedPosts = [...displayedPosts].sort((a, b) => {
       const titleA = a.title.toUpperCase();
@@ -48,6 +50,7 @@ const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
       sortedPosts.reverse();
     }
     setIsSortAscending(!isSortAscending);
+
     dispatch(setDisplayedPosts(sortedPosts));
   };
 
@@ -55,18 +58,16 @@ const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
   const indexOfLastPost = currentPage * itemsPerPage;
   const indexOfFirstPost = indexOfLastPost - itemsPerPage;
   const currentPosts = displayedPosts.slice(indexOfFirstPost, indexOfLastPost);
-
   const paginate = (pageNumber: number) => dispatch(setCurrentPage(pageNumber));
 
   return (
-    <div style={{ maxWidth: "768px" }} className="m-auto">
+    <div style={{ maxWidth: "768px" }} className="m-auto ">
       {totalPages > 1 && !postsIsLoading && (
-        <div className="pagination display-flex justify-content-center flex-wrap gap-2">
+        <div className="pagination display-flex justify-content-center flex-wrap gap-2 mb-2">
           {Array.from({ length: totalPages }, (_, index) => (
             <Button
               key={index}
               onClick={() => paginate(index + 1)}
-              variant="primary"
               className={currentPage === index + 1 ? "active" : ""}
             >
               {index + 1}
@@ -99,17 +100,14 @@ const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
         </Col>
       </Row>
 
-      {postsIsLoading ? (
-        Array(5)
-          .fill(5)
-          .map((_, index) => <PostPlaceholder key={index} />)
-      ) : currentPosts.length > 0 ? (
-        currentPosts.map((post) => {
-          return <Post key={post.id} {...post} />;
-        })
-      ) : (
-        <p>The search has not lead to any results...</p>
-      )}
+      {postsIsLoading
+        ? Array(5)
+            .fill(5)
+            .map((_, index) => <PostPlaceholder key={index} />)
+        : currentPosts.length > 0 &&
+          currentPosts.map((post) => {
+            return <Post key={post.id} {...post} />;
+          })}
     </div>
   );
 };
