@@ -5,6 +5,7 @@ import { FaTimes } from "react-icons/fa";
 import { RootState } from "../../redux/store";
 import { useLocation } from "react-router-dom";
 import { setDisplayedPosts } from "../../redux/reducers/displayedPostsSlice";
+import { setCurrentPage } from "../../redux/reducers/paginationSlice";
 
 const SearchInput = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const SearchInput = () => {
         : userPosts.filter((post) =>
             post.title.includes(e.target.value.toLowerCase())
           );
-
+    dispatch(setCurrentPage(1));
     dispatch(setDisplayedPosts(newPosts));
   };
 

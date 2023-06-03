@@ -1,6 +1,7 @@
 import { takeEvery, put, delay, call, fork } from "@redux-saga/core/effects";
 import {
   setUser,
+  setUserInfoIsLoading,
   setUserPosts,
   setUserPostsError,
   setUserPostsIsLoading,
@@ -36,10 +37,11 @@ export function* handleUserInfo(
 ): Generator<any, void, any> {
   try {
     const data = yield call(getUserInfo, action.payload);
-
+    yield put(setUserInfoIsLoading(true));
     yield put(setUser(data));
 
     yield delay(500);
+    yield put(setUserInfoIsLoading(false));
   } catch (error) {
     console.log(error);
   }

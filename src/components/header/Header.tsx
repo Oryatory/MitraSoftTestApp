@@ -17,7 +17,7 @@ const Header = () => {
     <header>
       <Container>
         <Navbar
-          expand="xxl"
+          expand="all"
           className="justify-content-between align-items-center m-auto"
           style={{ maxWidth: "768px" }}
         >

@@ -1,35 +1,36 @@
 import Post from "../post/Post";
 import PostPlaceholder from "../post/PostPlaceholder";
-import { PostProps } from "../post/Post";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Row, Col, Button } from "react-bootstrap";
 import { BsSortAlphaDown, BsSortAlphaUpAlt } from "react-icons/bs";
 import { useState } from "react";
 import { setDisplayedPosts } from "../../redux/reducers/displayedPostsSlice";
+import { setCurrentPage } from "../../redux/reducers/paginationSlice";
 
 export interface PostListProps {
-  posts: PostProps[];
   postsError: string;
   postsIsLoading: boolean;
   title: string;
 }
 
-const PostsList = ({
-  posts,
-  postsError,
-  postsIsLoading,
-  title,
-}: PostListProps) => {
+const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
+  const dispatch = useDispatch();
+
   const { displayedPosts } = useSelector(
     (store: RootState) => store?.displayedPostsSlice || {}
   );
 
-  const dispatch = useDispatch();
-  if (!posts && !postsIsLoading) {
+  if (!displayedPosts && !postsIsLoading) {
     return postsError ? <h2>{postsError}</h2> : null;
   }
+
+  const { currentPage, itemsPerPage } = useSelector(
+    (store: RootState) => store?.paginationSlice || {}
+  );
+
   const [isSortAscending, setIsSortAscending] = useState(false);
+
   const handleSort = () => {
     const sortedPosts = [...displayedPosts].sort((a, b) => {
       const titleA = a.title.toUpperCase();
@@ -50,9 +51,29 @@ const PostsList = ({
     dispatch(setDisplayedPosts(sortedPosts));
   };
 
-  posts = displayedPosts;
+  const totalPages = Math.ceil(displayedPosts.length / itemsPerPage);
+  const indexOfLastPost = currentPage * itemsPerPage;
+  const indexOfFirstPost = indexOfLastPost - itemsPerPage;
+  const currentPosts = displayedPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = (pageNumber: number) => dispatch(setCurrentPage(pageNumber));
+
   return (
     <div style={{ maxWidth: "768px" }} className="m-auto">
+      {totalPages > 1 && !postsIsLoading && (
+        <div className="pagination display-flex justify-content-center flex-wrap gap-2">
+          {Array.from({ length: totalPages }, (_, index) => (
+            <Button
+              key={index}
+              onClick={() => paginate(index + 1)}
+              variant="primary"
+              className={currentPage === index + 1 ? "active" : ""}
+            >
+              {index + 1}
+            </Button>
+          ))}
+        </div>
+      )}
       <Row>
         <Col>
           <h2 style={{ color: "#000" }}>{title}:</h2>
@@ -82,8 +103,8 @@ const PostsList = ({
         Array(5)
           .fill(5)
           .map((_, index) => <PostPlaceholder key={index} />)
-      ) : posts.length > 0 ? (
-        posts.map((post) => {
+      ) : currentPosts.length > 0 ? (
+        currentPosts.map((post) => {
           return <Post key={post.id} {...post} />;
         })
       ) : (

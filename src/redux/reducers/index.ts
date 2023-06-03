@@ -4,6 +4,7 @@ import commentsSlice from "./commentsSlice";
 import userSlice from "./userSlice";
 import searchSlice from "./searchSlice";
 import displayedPostsSlice from "./displayedPostsSlice";
+import paginationSlice from "./paginationSlice";
 
 const rootReducer = combineReducers({
   postsSlice,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   userSlice,
   searchSlice,
   displayedPostsSlice,
+  paginationSlice,
 });
 
 export default rootReducer;

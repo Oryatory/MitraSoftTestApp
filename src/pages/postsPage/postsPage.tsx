@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import SearchInput from "../../components/searchInput/SearchInput";
 
 const PostsPage = () => {
-  const { posts, postsError, postsIsLoading } = useSelector(
+  const { postsError, postsIsLoading } = useSelector(
     (store: RootState) => store?.postsSlice || {}
   );
 
@@ -22,7 +22,6 @@ const PostsPage = () => {
       <SearchInput />
       <Container>
         <PostsList
-          posts={posts}
           postsError={postsError}
           postsIsLoading={postsIsLoading}
           title={"All Posts"}

@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import PostsList from "../../components/postsList/PostsList";
 import UserInfo from "../../components/userInfo/UserInfo";
+import UserInfoPlaceholder from "../../components/userInfo/UserInfoPlaceholder";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useEffect } from "react";
@@ -15,17 +16,19 @@ const UserPostsPages = () => {
     dispatch({ type: "user/fetchUser", payload: id });
   }, [dispatch]);
 
-  const { user, userPosts, userPostsError, userPostsIsLoading } = useSelector(
-    (store: RootState) => store?.userSlice
-  );
+  const { user, userInfoIsLoading, userPostsError, userPostsIsLoading } =
+    useSelector((store: RootState) => store?.userSlice);
 
   return (
     <>
       <SearchInput />
       <Container>
-        {user ? <UserInfo user={user} /> : null}
+        {!userInfoIsLoading && user ? (
+          <UserInfo user={user} />
+        ) : (
+          <UserInfoPlaceholder />
+        )}
         <PostsList
-          posts={userPosts}
           postsError={userPostsError}
           postsIsLoading={userPostsIsLoading}
           title={"User Posts"}

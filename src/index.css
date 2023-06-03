@@ -31,8 +31,7 @@ main {
 header {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
   position: fixed;
-  width: 100vw;
-
+  width: 100%;
   background-color: #ffffff;
   z-index: 10;
 }
