@@ -25,10 +25,12 @@ const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
 
   useEffect(() => {
     const bodyStyles = document.body.style;
+    const header = document.getElementsByTagName("header")[0];
+
     bodyStyles.paddingRight =
-      searchTerm === "" || displayedPosts.length < 1
-        ? `${scrollbarWidth}px`
-        : "0px";
+      displayedPosts.length < 1 ? `${scrollbarWidth}px` : "0px";
+    header.style.paddingRight =
+      displayedPosts.length < 1 ? `${scrollbarWidth}px` : "0px";
   }, [searchTerm, displayedPosts]);
 
   if (displayedPosts.length === 0 && !postsIsLoading) {
