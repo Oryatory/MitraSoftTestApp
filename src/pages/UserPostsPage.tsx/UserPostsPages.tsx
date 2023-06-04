@@ -6,20 +6,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useEffect } from "react";
 import SearchInput from "../../components/searchInput/SearchInput";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { setCurrentPage } from "../../redux/reducers/paginationSlice";
 import BackToAllPostsBtn from "../../components/buttons/BackToAllPostsBtn";
 import { setSearchTerm } from "../../redux/reducers/searchSlice";
+import { setIsSorted } from "../../redux/reducers/displayedPostsSlice";
 
 const UserPostsPages = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { searchTerm } = useSelector((store: RootState) => store?.searchSlice);
 
   useEffect(() => {
     dispatch({ type: "user/fetchUser", payload: id });
     dispatch(setCurrentPage(1));
-    if (searchTerm !== "") dispatch(setSearchTerm(""));
+    dispatch(setIsSorted(false));
+    dispatch(setSearchTerm(""));
   }, [dispatch]);
 
   const {
@@ -39,14 +40,14 @@ const UserPostsPages = () => {
         ) : user ? (
           <UserInfo user={user} />
         ) : (
-          <Row className="display-flex justify-space-between">
-            <Col>
-              <p>{userInfoError}</p>
-            </Col>
-            <Col className="d-flex justify-content-end">
-              <BackToAllPostsBtn />
-            </Col>
-          </Row>
+          <div
+            className="d-flex flex-nowrap justify-content-between"
+            style={{ flexDirection: "row" }}
+          >
+            <p>{userInfoError}</p>
+
+            <BackToAllPostsBtn />
+          </div>
         )}
         <PostsList
           postsError={userPostsError}

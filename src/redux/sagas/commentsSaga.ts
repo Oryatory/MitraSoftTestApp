@@ -1,5 +1,9 @@
 import { takeEvery, put, call, delay } from "redux-saga/effects";
-import { setCommentsIsLoading, setComments } from "../reducers/commentsSlice";
+import {
+  setCommentsIsLoading,
+  setComments,
+  setCommentsError,
+} from "../reducers/commentsSlice";
 import { getComments } from "../../api";
 import { PayloadAction } from "@reduxjs/toolkit";
 
@@ -15,6 +19,8 @@ export function* handleComments(
     yield put(setCommentsIsLoading(postId));
   } catch (error) {
     console.log(error);
+    yield put(setCommentsIsLoading(action.payload));
+    yield put(setCommentsError(action.payload));
   }
 }
 

@@ -8,7 +8,7 @@ interface CommentsProps {
 }
 
 const Comments = ({ id }: CommentsProps) => {
-  const { comments, commentsIsLoading } = useSelector(
+  const { comments, commentsIsLoading, commentsError } = useSelector(
     (store: RootState) => store?.commentsSlice?.allComments?.[id] || {}
   );
   return comments && !commentsIsLoading ? (
@@ -36,6 +36,8 @@ const Comments = ({ id }: CommentsProps) => {
           ))}
       </div>
     </Placeholder>
+  ) : commentsError !== "" ? (
+    <p>{commentsError}</p>
   ) : null;
 };
 export default Comments;

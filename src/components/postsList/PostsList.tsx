@@ -2,7 +2,6 @@ import Post from "../post/Post";
 import PostPlaceholder from "../post/PostPlaceholder";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { Row, Col } from "react-bootstrap";
 import Pagination from "../pagination/Pagination";
 import AlphabetSortBtn from "../buttons/AlphabetSortBtn";
 
@@ -16,7 +15,7 @@ const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
   const { displayedPosts } = useSelector(
     (store: RootState) => store?.displayedPostsSlice || {}
   );
-
+  const { searchTerm } = useSelector((store: RootState) => store?.searchSlice);
   const { currentPage, itemsPerPage } = useSelector(
     (store: RootState) => store?.paginationSlice || {}
   );
@@ -39,14 +38,16 @@ const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
       {totalPages > 1 && !postsIsLoading && (
         <Pagination totalPages={totalPages} currentPage={currentPage} />
       )}
-      <Row>
-        <Col>
-          <h2 style={{ color: "#000" }}>{title}:</h2>
-        </Col>
-        <Col className="d-flex justify-content-end align-items-center">
-          <AlphabetSortBtn />
-        </Col>
-      </Row>
+      <div
+        className="d-flex justify-content-between flex-nowrap"
+        style={{ flexDirection: "row" }}
+      >
+        <h2 style={{ color: "#000" }}>
+          {searchTerm !== "" ? `Posts matching "${searchTerm}" request` : title}
+          :
+        </h2>
+        <AlphabetSortBtn />
+      </div>
 
       {postsIsLoading
         ? Array(5)

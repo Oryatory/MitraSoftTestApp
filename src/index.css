@@ -40,7 +40,7 @@ header {
   text-transform: uppercase;
 }
 
-.container > :first-child {
+.container > * {
   max-width: 768px;
   margin: auto;
 }

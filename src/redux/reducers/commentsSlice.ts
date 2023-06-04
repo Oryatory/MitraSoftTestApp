@@ -9,6 +9,7 @@ export interface CommentData {
 interface Comment {
   comments?: CommentData[];
   commentsIsLoading?: boolean;
+  commentsError?: string;
 }
 
 interface CommentsState {
@@ -34,13 +35,17 @@ const commentsSlice = createSlice({
       state.allComments = action.payload.reduce((acc, comment) => {
         return {
           ...acc,
-          [comment]: { commentsIsLoading: false },
+          [comment]: { commentsIsLoading: false, commentsError: "" },
         };
       }, {});
     },
     setCommentsIsLoading: (state, action: PayloadAction<number>) => {
       const isLoading = state.allComments[action.payload].commentsIsLoading;
       state.allComments[action.payload].commentsIsLoading = !isLoading;
+    },
+    setCommentsError: (state, action: PayloadAction<number>) => {
+      state.allComments[action.payload].commentsError =
+        "Error fetching comments...";
     },
   },
 });
@@ -49,6 +54,7 @@ export const {
   setComments,
   setInitialComments,
   setCommentsIsLoading,
+  setCommentsError,
   deleteComments,
 } = commentsSlice.actions;
 export default commentsSlice.reducer;

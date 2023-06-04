@@ -1,22 +1,16 @@
-import { Container, Card, Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Container, Card, Row, Col } from "react-bootstrap";
+import BackToAllPostsBtn from "../../components/buttons/BackToAllPostsBtn";
 
 const AboutMePage = () => {
   return (
     <Container>
-      <Row style={{ color: "#000" }} className="pb-3">
-        <Col>
-          <h2>About Me</h2>
-        </Col>
-        <Col>
-          <Button variant="primary" className="float-end text-reset">
-            <Link to="/" style={{ textDecoration: "none", color: "#fff" }}>
-              {" "}
-              Back to posts
-            </Link>
-          </Button>
-        </Col>
-      </Row>
+      <div
+        className="d-flex justify-content-between flex-nowrap align-items-center gap-2 mb-3"
+        style={{ flexDirection: "row" }}
+      >
+        <h2>About Me</h2>
+        <BackToAllPostsBtn />
+      </div>
 
       <Card style={{ color: "#000", maxWidth: "768px" }} className="m-auto p-5">
         <Row>
@@ -43,8 +37,11 @@ const AboutMePage = () => {
             <Card.Text className="h4">Stack:</Card.Text>
             <ul>
               <li>React</li>
+              <li>React-bootstrap</li>
+              <li>React-router</li>
               <li>Redux</li>
               <li>ReduxToolkit and ReduxSaga</li>
+              <li>TypeScript</li>
             </ul>
           </Col>
         </Row>

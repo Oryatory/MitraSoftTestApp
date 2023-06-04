@@ -6,6 +6,7 @@ import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
 import SearchInput from "../../components/searchInput/SearchInput";
 import { setSearchTerm } from "../../redux/reducers/searchSlice";
+import { setIsSorted } from "../../redux/reducers/displayedPostsSlice";
 
 const PostsPage = () => {
   const { postsError, postsIsLoading } = useSelector(
@@ -17,6 +18,7 @@ const PostsPage = () => {
   useEffect(() => {
     dispatch({ type: "posts/fetchPosts" });
     dispatch(setSearchTerm(""));
+    dispatch(setIsSorted(false));
   }, [dispatch]);
 
   return (
