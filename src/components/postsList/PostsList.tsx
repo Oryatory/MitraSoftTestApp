@@ -1,12 +1,10 @@
 import Post from "../post/Post";
 import PostPlaceholder from "../post/PostPlaceholder";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { Row, Col, Button } from "react-bootstrap";
-import { BsSortAlphaDown, BsSortAlphaUpAlt } from "react-icons/bs";
-import { useState } from "react";
-import { setDisplayedPosts } from "../../redux/reducers/displayedPostsSlice";
-import { setCurrentPage } from "../../redux/reducers/paginationSlice";
+import { Row, Col } from "react-bootstrap";
+import Pagination from "../pagination/Pagination";
+import AlphabetSortBtn from "../buttons/AlphabetSortBtn";
 
 export interface PostListProps {
   postsError: string;
@@ -15,8 +13,6 @@ export interface PostListProps {
 }
 
 const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
-  const dispatch = useDispatch();
-
   const { displayedPosts } = useSelector(
     (store: RootState) => store?.displayedPostsSlice || {}
   );
@@ -25,7 +21,6 @@ const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
     (store: RootState) => store?.paginationSlice || {}
   );
 
-  const [isSortAscending, setIsSortAscending] = useState(false);
   if (displayedPosts.length === 0 && !postsIsLoading) {
     return postsError ? (
       <p>{postsError}</p>
@@ -33,70 +28,23 @@ const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
       <p>The search has not lead to any results...</p>
     );
   }
-  const handleSort = () => {
-    const sortedPosts = [...displayedPosts].sort((a, b) => {
-      const titleA = a.title.toUpperCase();
-      const titleB = b.title.toUpperCase();
-
-      if (titleA < titleB) {
-        return -1;
-      } else if (titleA > titleB) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-    if (isSortAscending) {
-      sortedPosts.reverse();
-    }
-    setIsSortAscending(!isSortAscending);
-
-    dispatch(setDisplayedPosts(sortedPosts));
-  };
 
   const totalPages = Math.ceil(displayedPosts.length / itemsPerPage);
   const indexOfLastPost = currentPage * itemsPerPage;
   const indexOfFirstPost = indexOfLastPost - itemsPerPage;
   const currentPosts = displayedPosts.slice(indexOfFirstPost, indexOfLastPost);
-  const paginate = (pageNumber: number) => dispatch(setCurrentPage(pageNumber));
 
   return (
     <div style={{ maxWidth: "768px" }} className="m-auto ">
       {totalPages > 1 && !postsIsLoading && (
-        <div className="pagination display-flex justify-content-center flex-wrap gap-2 mb-2">
-          {Array.from({ length: totalPages }, (_, index) => (
-            <Button
-              key={index}
-              onClick={() => paginate(index + 1)}
-              className={currentPage === index + 1 ? "active" : ""}
-            >
-              {index + 1}
-            </Button>
-          ))}
-        </div>
+        <Pagination totalPages={totalPages} currentPage={currentPage} />
       )}
       <Row>
         <Col>
           <h2 style={{ color: "#000" }}>{title}:</h2>
         </Col>
         <Col className="d-flex justify-content-end align-items-center">
-          <Button
-            variant="secondary"
-            style={{
-              height: "60%",
-              width: "2.1rem",
-              overflow: "visible",
-              padding: "7px",
-            }}
-            className="d-flex justify-content-end align-items-center"
-            onClick={() => handleSort()}
-          >
-            {!isSortAscending ? (
-              <BsSortAlphaDown style={{ fontSize: "1.8rem" }} />
-            ) : (
-              <BsSortAlphaUpAlt style={{ fontSize: "1.8rem" }} />
-            )}
-          </Button>
+          <AlphabetSortBtn />
         </Col>
       </Row>
 

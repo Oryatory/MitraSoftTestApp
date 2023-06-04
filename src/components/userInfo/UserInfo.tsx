@@ -12,7 +12,7 @@ const UserInfo = memo(({ user }: UserInfoProps) => {
   const { street, suite, city } = address;
   const { name: companyName } = company;
   return (
-    <Card style={{ maxWidth: "768px" }} className="m-auto mb-5">
+    <Card className=" mb-5">
       <Card.Body>
         <Row>
           <Col>

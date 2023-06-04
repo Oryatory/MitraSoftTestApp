@@ -6,13 +6,17 @@ import { RootState } from "../../redux/store";
 import { useLocation } from "react-router-dom";
 import { setDisplayedPosts } from "../../redux/reducers/displayedPostsSlice";
 import { setCurrentPage } from "../../redux/reducers/paginationSlice";
+import alphabetSort from "../../filters/alphabetSort";
+import { memo } from "react";
 
-const SearchInput = () => {
+const SearchInput = memo(() => {
   const dispatch = useDispatch();
   const { posts } = useSelector((store: RootState) => store?.postsSlice);
   const { userPosts } = useSelector((store: RootState) => store?.userSlice);
-
   const { searchTerm } = useSelector((store: RootState) => store?.searchSlice);
+  const { isSorted, isSortAscending } = useSelector(
+    (store: RootState) => store?.displayedPostsSlice
+  );
   const location = useLocation();
 
   const handleClearSearch = () => {
@@ -21,15 +25,17 @@ const SearchInput = () => {
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newPosts =
+    const searchTerm = e.target.value.toLowerCase();
+    let newPosts =
       location.pathname === "/"
-        ? posts.filter((post) =>
-            post.title.includes(e.target.value.toLowerCase())
-          )
-        : userPosts.filter((post) =>
-            post.title.includes(e.target.value.toLowerCase())
-          );
+        ? posts.filter((post) => post.title.includes(searchTerm))
+        : userPosts.filter((post) => post.title.includes(searchTerm));
     dispatch(setCurrentPage(1));
+    newPosts = isSorted
+      ? isSortAscending
+        ? alphabetSort(newPosts, false)
+        : alphabetSort(newPosts, true)
+      : newPosts;
     dispatch(setDisplayedPosts(newPosts));
   };
 
@@ -67,6 +73,6 @@ const SearchInput = () => {
       </div>
     </Container>
   );
-};
+});
 
 export default SearchInput;

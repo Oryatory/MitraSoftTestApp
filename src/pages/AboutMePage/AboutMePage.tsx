@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const AboutMePage = () => {
   return (
     <Container>
-      <Row style={{ color: "#000", maxWidth: "768px" }} className="m-auto pb-3">
+      <Row style={{ color: "#000" }} className="pb-3">
         <Col>
           <h2>About Me</h2>
         </Col>

@@ -14,11 +14,12 @@ import { setSearchTerm } from "../../redux/reducers/searchSlice";
 const UserPostsPages = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const { searchTerm } = useSelector((store: RootState) => store?.searchSlice);
 
   useEffect(() => {
     dispatch({ type: "user/fetchUser", payload: id });
     dispatch(setCurrentPage(1));
-    dispatch(setSearchTerm(""));
+    if (searchTerm !== "") dispatch(setSearchTerm(""));
   }, [dispatch]);
 
   const {
@@ -38,10 +39,7 @@ const UserPostsPages = () => {
         ) : user ? (
           <UserInfo user={user} />
         ) : (
-          <Row
-            style={{ maxWidth: "768px" }}
-            className="display-flex justify-space-between"
-          >
+          <Row className="display-flex justify-space-between">
             <Col>
               <p>{userInfoError}</p>
             </Col>

@@ -5,9 +5,8 @@ const UserInfoPlaceholder = () => {
     <Card
       style={{
         color: "#000",
-        maxWidth: "768px",
       }}
-      className="m-auto mb-5"
+      className=" mb-5"
     >
       <Row>
         <Col>
