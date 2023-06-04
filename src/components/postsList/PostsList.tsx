@@ -26,7 +26,7 @@ const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
   useEffect(() => {
     const bodyStyles = document.body.style;
     bodyStyles.paddingRight =
-      searchTerm === "" && displayedPosts.length < 1
+      searchTerm === "" || displayedPosts.length < 1
         ? `${scrollbarWidth}px`
         : "0px";
   }, [searchTerm, displayedPosts]);
