@@ -7,6 +7,7 @@
 - React-router
 - Axios
 - Redux
+- Redux-toolkit
 - Redux-saga
 - Git
 - Vite
