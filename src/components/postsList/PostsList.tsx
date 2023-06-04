@@ -4,12 +4,15 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import Pagination from "../pagination/Pagination";
 import AlphabetSortBtn from "../buttons/AlphabetSortBtn";
+import { useEffect } from "react";
 
 export interface PostListProps {
   postsError: string;
   postsIsLoading: boolean;
   title: string;
 }
+
+const scrollbarWidth = window.innerWidth - document.body.offsetWidth;
 
 const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
   const { displayedPosts } = useSelector(
@@ -19,6 +22,14 @@ const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
   const { currentPage, itemsPerPage } = useSelector(
     (store: RootState) => store?.paginationSlice || {}
   );
+
+  useEffect(() => {
+    const bodyStyles = document.body.style;
+    bodyStyles.paddingRight =
+      searchTerm === "" && displayedPosts.length < 1
+        ? `${scrollbarWidth}px`
+        : "0px";
+  }, [searchTerm, displayedPosts]);
 
   if (displayedPosts.length === 0 && !postsIsLoading) {
     return postsError ? (

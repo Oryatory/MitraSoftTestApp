@@ -38,14 +38,26 @@ const UserInfo = memo(({ user }: UserInfoProps) => {
         <h2>{username}`s info:</h2>
         <Row>
           <Col>
-            <Card.Text>Name: {name}</Card.Text>
-            <Card.Text>Email: {email}</Card.Text>
-            <Card.Text>Phone: {phone}</Card.Text>
+            <Card.Text>
+              <b>Name:</b> {name}
+            </Card.Text>
+            <Card.Text>
+              <b>Email:</b> {email}
+            </Card.Text>
+            <Card.Text>
+              <b>Phone:</b> {phone}
+            </Card.Text>
           </Col>
           <Col>
-            <Card.Text>Personal website: {website}</Card.Text>
-            <Card.Text>Adress: {`${street}, ${suite}, ${city}`}</Card.Text>
-            <Card.Text>Works at: {companyName}</Card.Text>
+            <Card.Text>
+              <b>Personal website:</b> {website}
+            </Card.Text>
+            <Card.Text>
+              <b>Adress:</b> {`${street}, ${suite}, ${city}`}
+            </Card.Text>
+            <Card.Text>
+              <b>Works at:</b> {companyName}
+            </Card.Text>
           </Col>
         </Row>
       </Card.Body>
