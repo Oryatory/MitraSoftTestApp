@@ -26,7 +26,7 @@ const AboutMePage = () => {
               />
             </div>
             <Card.Title style={{ fontWeight: "700", fontSize: "1.5rem" }}>
-              Ilia Larin
+              Ilya Larin
             </Card.Title>
           </Col>
           <Col md={8}>

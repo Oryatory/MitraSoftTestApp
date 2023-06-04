@@ -47,6 +47,24 @@ const Header = () => {
                       {title}
                     </NavLink>
                   ))}
+                  <div
+                    style={{ marginTop: "auto", flexDirection: "column" }}
+                    className="d-flex align-items-end"
+                  >
+                    <div
+                      className="rounded-circle overflow-hidden mb-3"
+                      style={{ width: "100px", height: "100px" }}
+                    >
+                      <img
+                        src="https://i.ibb.co/KDhk2y5/photo-2022-12-03-15-26-10-2.jpg"
+                        alt="Avatar"
+                        className="w-100 h-100 object-fit-cover"
+                      />
+                    </div>
+
+                    <h3>Ilya Larin</h3>
+                    <p>larin.ia28@gmail.com</p>
+                  </div>
                 </Nav>
               </Offcanvas.Body>
             </Offcanvas>
