@@ -54,7 +54,11 @@ const PostsList = ({ postsError, postsIsLoading, title }: PostListProps) => {
         style={{ flexDirection: "row" }}
       >
         <h2 style={{ color: "#000" }}>
-          {searchTerm !== "" ? `Posts matching "${searchTerm}" request` : title}
+          {searchTerm !== ""
+            ? `${
+                title === "User Posts" ? "User " : "All "
+              }posts matching "${searchTerm}" request`
+            : title}
           :
         </h2>
         <AlphabetSortBtn />
