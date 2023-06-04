@@ -47,6 +47,7 @@ const SearchInput = memo(() => {
       >
         <input
           type="text"
+          name="search-input"
           className="form-control"
           placeholder="Search..."
           value={searchTerm}
